@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Control Panel | Rerezz Official</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --secondary: #10b981;
+            --dark: #000000;
+            --light: #ffffff;
+            --accent: #f59e0b;
+            --dark-mode: #000000;
+            --light-mode: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            overflow-x: hidden;
+            background-color: var(--light-mode);
+            color: var(--dark);
+            height: 100%;
+            position: relative;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease;
+        }
+        
+        body.dark-mode {
+            background-color: var(--dark-mode);
+            color: var(--light);
+        }
+        
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 3rem;
+            max-width: 1200px;
+            width: 90%;
+            margin: 2rem auto;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+        
+        body.dark-mode .content {
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            animation: rotate 15s linear infinite;
+            z-index: -1;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        body.dark-mode h1 {
+            color: var(--light);
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: rgba(0, 0, 0, 0.8);
+            margin-bottom: 2.5rem;
+            text-align: center;
+            font-weight: 300;
+        }
+        
+        body.dark-mode .subtitle {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 25px;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        body.dark-mode .card {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, transparent 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            border-color: rgba(99, 102, 241, 0.5);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        body.dark-mode .card:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+        
+        .card:hover::before {
+            opacity: 1;
+        }
+        
+        .card i {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover i {
+            transform: scale(1.2) rotate(5deg);
+        }
+        
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        body.dark-mode .card h3 {
+            color: var(--light);
+        }
+        
+        .card p {
+            font-size: 0.9rem;
+            color: rgba(0, 0, 0, 0.6);
+            font-weight: 300;
+        }
+        
+        body.dark-mode .card p {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+        
+        .mode-toggle:hover {
+            transform: scale(1.2);
+        }
+        
+        .glow {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+            filter: blur(30px);
+            opacity: 0.3;
+            z-index: -1;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(50px, 50px); }
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .grid-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 2rem;
+                width: 95%;
+            }
+            
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .content {
+                padding: 1.5rem;
+            }
+            
+            .grid-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas-bg"></canvas>
+    <br><br>
+    <div class="content">
+        <div class="glow" style="top: -50px; left: -50px;"></div>
+        <div class="glow" style="bottom: -50px; right: -50px; animation-delay: 2s;"></div>
+        
+        <h1>Premium Control Panel</h1>
+        <p class="subtitle">Kelola sistem Anda dengan antarmuka modern dan powerful</p>
+        
+        <div class="grid-container">
+            <div class="card" onclick="openLink('/buy/panel')">
+                <i class="fas fa-rocket"></i>
+                <h3>Buy Panel</h3>
+                <p>Dapatkan panel premium dengan fitur lengkap</p>
+            </div>
+            <div class="card" onclick="openLink('/buy/admin')">
+                <i class="fas fa-crown"></i>
+                <h3>Buy Admin</h3>
+                <p>Akses penuh ke sistem administrasi</p>
+            </div>
+            <div class="card" onclick="openLink('/buy/reseller')">
+                <i class="fas fa-crown"></i>
+                <h3>Buy Reseller</h3>
+                <p>Akses Key Reseller Panel Otomatis</p>
+            </div>
+            <div class="card" onclick="openLink('/buy/script')">
+                <i class="fas fa-code"></i>
+                <h3>Buy Script</h3>
+                <p>Beli Script Bot WHtsApp</p>
+            </div>
+            <div class="card" onclick="openLink('https://wa.me/628')">
+                <i class="fas fa-rocket"></i>
+                <h3>Buy VPS</h3>
+                <p>Beli Virtual Private Server Terbaik</p>
+            </div>
+            <div class="card" onclick="openLink('/create/panel')">
+                <i class="fas fa-plus-circle"></i>
+                <h3>Create Panel</h3>
+                <p>Buat panel custom sesuai kebutuhan</p>
+            </div>
+            <div class="card" onclick="openLink('/create/admin')">
+                <i class="fas fa-user-shield"></i>
+                <h3>Create Admin</h3>
+                <p>Buat akun admin dengan hak akses khusus</p>
+            </div>
+            <div class="card" onclick="openLink('/aboutme')">
+                <i class="fas fa-cog"></i>
+                <h3>About Me</h3>
+                <p>Tentang Saya</p>
+            </div>
+            <div class="card" onclick="openLink('/myadmin')">
+                <i class="fas fa-cog"></i>
+                <h3>Settings</h3>
+                <p>Pengaturan sistem dan preferensi</p>
+            </div>
+        </div>
+        
+        <div class="mode-toggle" id="mode-toggle" onclick="toggleMode()">
+            <i class="fas fa-moon" id="mode-icon"></i>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        const modeToggle = document.getElementById('mode-toggle');
+        const modeIcon = document.getElementById('mode-icon');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        class Particle {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+            }
+            
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * -100;
+                this.speed = Math.random() * 0.5 + 0.2;
+                this.opacity = Math.random() * 0.6 + 0.1;
+                this.blur = Math.random() * 3;
+                this.color = `hsla(${Math.random() * 60 + 200}, 80%, 60%, ${this.opacity})`;
+            }
+            
+            update() {
+                this.y += this.speed;
+                if (this.y > canvas.height + 10) {
+                    this.reset();
+                }
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = this.blur;
+                ctx.shadowColor = this.color;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        class Connection {
+            constructor(particles) {
+                this.particles = particles;
+                this.maxDistance = 150;
+            }
+            
+            draw() {
+                for (let a = 0; a < this.particles.length; a++) {
+                    for (let b = a; b < this.particles.length; b++) {
+                        const dx = this.particles[a].x - this.particles[b].x;
+                        const dy = this.particles[a].y - this.particles[b].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < this.maxDistance) {
+                            const opacity = 1 - distance / this.maxDistance;
+                            ctx.strokeStyle = `rgba(99, 102, 241, ${opacity * 0.3})`;
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(this.particles[a].x, this.particles[a].y);
+                            ctx.lineTo(this.particles[b].x, this.particles[b].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+        }
+        
+        const particles = [];
+        const particleCount = window.innerWidth < 768 ? 60 : 120;
+        
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+        
+        const connection = new Connection(particles);
+        
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#ffffff');
+            gradient.addColorStop(1, '#ffffff');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            connection.draw();
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px) scale(1.03)';
+                card.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.3)';
+                card.style.border = '1px solid rgba(99, 102, 241, 0.5)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+                card.style.boxShadow = 'none';
+                card.style.border = '1px solid rgba(0, 0, 0, 0.1)';
+            });
+        });
+        
+        function openLink(url) {
+            window.location.href = url;
+        }
+        
+        function toggleMode() {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                modeIcon.className = 'fas fa-sun';
+                gsap.to(modeIcon, {
+                    x: 10,
+                    duration: 0.3,
+                    ease: 'power2.inOut'
+                });
+                gsap.to(modeIcon, {
+                    x: 0,
+                    delay: 0.3,
+                    duration: 0.3,
+                    ease: 'power2.inOut'
+                });
+            } else {
+                modeIcon.className = 'fas fa-moon';
+                gsap.to(modeIcon, {
+                    x: 10,
+                    duration: 0.3,
+                    ease: 'power2.inOut'
+                });
+                gsap.to(modeIcon, {
+                    x: 0,
+                    delay: 0.3,
+                    duration: 0.3,
+                    ease: 'power2.inOut'
+                });
+            }
+        }
+    </script>
+</body>
+</html>

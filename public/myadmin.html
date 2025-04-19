@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Control Panel</title>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #f3f4f6, #e0e7ff);
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+        h1 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        @media (min-width: 1024px) {
+            .grid-container {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+        @media (max-width: 1023px) and (min-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (max-width: 767px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .card {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .card i {
+            font-size: 2.5rem;
+            color: #00e4ff;
+            margin-bottom: 1rem;
+        }
+        .card h3 {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        footer {
+            position: absolute;
+            bottom: 10px;
+            text-align: center;
+            width: 100%;
+            color: #555;
+            font-size: 0.8rem;
+            z-index: 1000;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <div class="content">
+        <h1>Selamat Datang</h1>
+        <p>Website Control Panel</p>
+        <div class="grid-container">
+            <div class="card" onclick="openLink('/buy/panel')">
+                <i class="fas fa-dove"></i>
+                <h3>Buy Panel</h3>
+            </div>
+            <div class="card" onclick="openLink('/buy/admin')">
+                <i class="fas fa-crown"></i>
+                <h3>Buy Admin</h3>
+            </div>
+            <div class="card" onclick="openLink('/create/panel')">
+                <i class="fas fa-dove"></i>
+                <h3>Create Panel</h3>
+            </div>
+            <div class="card" onclick="openLink('/create/admin')">
+                <i class="fas fa-crown"></i>
+                <h3>Create Admin</h3>
+            </div>
+            <div class="card" onclick="openLink('/list/user')">
+                <i class="fas fa-user"></i>
+                <h3>List User</h3>
+            </div>
+            <div class="card" onclick="openLink('/list/server')">
+                <i class="fas fa-server"></i>
+                <h3>List Server</h3>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 Website Control Panel BY Rerezz Official.<br>
+        <a href="#">Beli Script Di Sini</a>
+    </footer>
+
+    <script>
+        function openLink(url) {
+            window.location.href = url;
+        }
+
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 90, density: { enable: true, value_area: 800 } },
+                shape: { 
+                    type: "polygon", 
+                    stroke: { width: 2, color: "#00e4ff" }, 
+                    polygon: { nb_sides: 6 } 
+                },
+                opacity: { value: 0.6, random: true },
+                size: { value: 12, random: true },
+                move: { enable: true, speed: 2, direction: "top", out_mode: "out" },
+                line_linked: { enable: true, distance: 140, color: "#00e4ff", opacity: 0.5, width: 2 }
+            },
+            interactivity: {  
+                detect_on: "canvas",  
+                events: {  
+                    onhover: { enable: false },
+                    onclick: { enable: false },
+                    resize: true  
+                }  
+            }
+        });
+    </script>
+</body>
+</html>

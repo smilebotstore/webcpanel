@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEV PORTFOLIO</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a0a12;
+            --secondary: #6e00ff;
+            --accent: #00f0ff;
+            --light: #f0f0ff;
+            --dark: #070710;
+            --neon: #00ff88;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        @font-face {
+            font-family: 'Rajdhani';
+            src: url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+        }
+
+        body {
+            background-color: var(--primary);
+            color: var(--light);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        #matrix-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.15;
+        }
+
+        #particles-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.3;
+        }
+
+        #circuit-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.2;
+        }
+
+        header {
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .profile-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--accent);
+            box-shadow: 0 0 30px var(--accent);
+            position: relative;
+            z-index: 2;
+            transition: transform 0.5s;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .profile-glow {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent), transparent 70%);
+            filter: blur(20px);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            animation: pulse 4s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin: 1.5rem 0;
+            background: linear-gradient(90deg, var(--accent), var(--neon));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .tagline::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .social-links a {
+            color: var(--light);
+            font-size: 1.8rem;
+            transition: all 0.4s;
+            position: relative;
+        }
+
+        .social-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.4s;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .social-links a:hover::before {
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(0, 240, 255, 0.03) 30%, transparent);
+            pointer-events: none;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--neon));
+            border-radius: 2px;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.5s;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 240, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+            opacity: 0;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+
+        .skill-card:hover::before {
+            animation: shine 1.5s;
+        }
+
+        @keyframes shine {
+            0% { opacity: 0; left: -50%; }
+            50% { opacity: 1; }
+            100% { opacity: 0; left: 150%; }
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .skill-name {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.5s;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(110, 0, 255, 0.1), rgba(0, 240, 255, 0.1));
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-img-container {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s;
+        }
+
+        .project-card:hover .project-img {
+            transform: scale(1.1);
+        }
+
+        .project-info {
+            padding: 2rem;
+            position: relative;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .project-desc {
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(0, 240, 255, 0.1);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .demo-link {
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            color: var(--dark);
+        }
+
+        .code-link {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        .demo-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(110, 0, 255, 0.3);
+        }
+
+        .code-link:hover {
+            background: rgba(0, 240, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .experience-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .experience-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), var(--neon));
+        }
+
+        .experience-item {
+            display: flex;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .experience-item:nth-child(odd) {
+            justify-content: flex-start;
+            padding-right: calc(50% + 2rem);
+            text-align: right;
+        }
+
+        .experience-item:nth-child(even) {
+            justify-content: flex-end;
+            padding-left: calc(50% + 2rem);
+        }
+
+        .experience-content {
+            width: calc(50% - 2rem);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--neon);
+            box-shadow: 0 0 10px var(--neon);
+            z-index: 1;
+        }
+
+        .experience-item:nth-child(odd)::before {
+            right: calc(50% - 10px);
+        }
+
+        .experience-item:nth-child(even)::before {
+            left: calc(50% - 10px);
+        }
+
+        .experience-date {
+            color: var(--neon);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .experience-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .experience-company {
+            font-style: italic;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 3rem;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            color: var(--accent);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            color: var(--dark);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(110, 0, 255, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            position: relative;
+        }
+
+        .footer-text {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        .footer-highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .skills-container {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+            
+            .projects-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .tagline {
+                font-size: 1.3rem;
+            }
+            
+            .experience-container::before {
+                left: 2rem;
+            }
+            
+            .experience-item {
+                flex-direction: column;
+                margin-bottom: 2rem;
+            }
+            
+            .experience-item:nth-child(odd),
+            .experience-item:nth-child(even) {
+                padding: 0 0 0 4rem;
+                text-align: left;
+            }
+            
+            .experience-content {
+                width: 100%;
+            }
+            
+            .experience-item::before {
+                left: 1.5rem;
+            }
+            
+            .experience-item:nth-child(odd)::before,
+            .experience-item:nth-child(even)::before {
+                left: 1.5rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .tagline {
+                font-size: 1.1rem;
+            }
+            
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .projects-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-form {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas-container">
+        <canvas id="matrix-bg"></canvas>
+        <canvas id="particles-bg"></canvas>
+        <canvas id="circuit-bg"></canvas>
+    </div>
+
+    <header>
+        <div class="profile-container">
+            <div class="profile-glow"></div>
+            <img src="https://via.placeholder.com/180" alt="Profile" class="profile-img">
+        </div>
+        <h1>Rerezz Indonesian Developer</h1>
+        <p class="tagline">Full Stack Engineer & AI Specialist</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fas fa-envelope"></i></a>
+        </div>
+    </header>
+
+    <div class="container">
+        <section id="about">
+            <h2>About Me</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <p style="margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.1rem;">
+                    I'm a passionate full-stack developer with 7+ years of experience building scalable web applications and AI-powered solutions. My expertise spans across JavaScript ecosystems, cloud architecture, and machine learning implementations.
+                </p>
+                <p style="line-height: 1.8; font-size: 1.1rem;">
+                    I specialize in creating performant, user-centric applications with clean code architecture. My approach combines technical excellence with creative problem-solving to deliver exceptional digital experiences.
+                </p>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2>Technical Skills</h2>
+            <div class="skills-container">
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fab fa-react"></i></div>
+                    <h3 class="skill-name">React Ecosystem</h3>
+                    <p>Next.js, Redux, Gatsby</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fab fa-node-js"></i></div>
+                    <h3 class="skill-name">Node.js</h3>
+                    <p>Express, NestJS, GraphQL</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-database"></i></div>
+                    <h3 class="skill-name">Databases</h3>
+                    <p>MongoDB, PostgreSQL, Redis</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-cloud"></i></div>
+                    <h3 class="skill-name">Cloud & DevOps</h3>
+                    <p>AWS, Docker, Kubernetes</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-robot"></i></div>
+                    <h3 class="skill-name">AI/ML</h3>
+                    <p>TensorFlow, PyTorch, NLP</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3 class="skill-name">Mobile</h3>
+                    <p>React Native, Flutter</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Featured Projects</h2>
+            <div class="projects-container">
+                <div class="project-card">
+                    <div class="project-img-container">
+                        <img src="https://via.placeholder.com/600x400" alt="AI Platform" class="project-img">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">NeuralMind AI Platform</h3>
+                        <p class="project-desc">
+                            Enterprise-grade AI platform with custom model training, deployment pipelines, and real-time analytics dashboard.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">AWS</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link demo-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#" class="project-link code-link">
+                                <i class="fab fa-github"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img-container">
+                        <img src="https://via.placeholder.com/600x400" alt="E-commerce" class="project-img">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">QuantumShop Pro</h3>
+                        <p class="project-desc">
+                            High-performance e-commerce solution with AR product previews, AI recommendations, and blockchain payments.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Next.js</span>
+                            <span class="tech-tag">GraphQL</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">Three.js</span>
+                            <span class="tech-tag">Solidity</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link demo-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#" class="project-link code-link">
+                                <i class="fab fa-github"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img-container">
+                        <img src="https://via.placeholder.com/600x400" alt="Health App" class="project-img">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">HealthSync Pro</h3>
+                        <p class="project-desc">
+                            Cross-platform health monitoring app with wearable integration, predictive analytics, and telemedicine features.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">BLE</span>
+                            <span class="tech-tag">WebRTC</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link demo-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#" class="project-link code-link">
+                                <i class="fab fa-github"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2>Professional Journey</h2>
+            <div class="experience-container">
+                <div class="experience-item">
+                    <div class="experience-content">
+                        <div class="experience-date">2022 - Present</div>
+                        <h3 class="experience-title">Lead AI Engineer</h3>
+                        <div class="experience-company">NeuroTech Solutions</div>
+                        <p>
+                            Leading a team of 12 engineers in developing cutting-edge AI solutions for healthcare and finance sectors. Architecting scalable ML pipelines and mentoring junior developers.
+                        </p>
+                    </div>
+                </div>
+                <div class="experience-item">
+                    <div class="experience-content">
+                        <div class="experience-date">2019 - 2022</div>
+                        <h3 class="experience-title">Senior Full Stack Developer</h3>
+                        <div class="experience-company">Quantum Innovations</div>
+                        <p>
+                            Developed enterprise web applications with React and Node.js. Optimized application performance by 65% through code refactoring and infrastructure improvements.
+                        </p>
+                    </div>
+                </div>
+                <div class="experience-item">
+                    <div class="experience-content">
+                        <div class="experience-date">2016 - 2019</div>
+                        <h3 class="experience-title">Software Engineer</h3>
+                        <div class="experience-company">Digital Horizon</div>
+                        <p>
+                            Built responsive web applications and RESTful APIs. Collaborated with cross-functional teams to deliver high-quality software solutions on tight deadlines.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Get In Touch</h2>
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Your Message</label>
+                    <textarea id="message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+        </section>
+    </div>
+
+    <footer>
+        <p class="footer-text">Crafted with <span class="footer-highlight">passion</span> and <span class="footer-highlight">code</span> © 2023</p>
+    </footer>
+
+    <script>
+        const matrixCanvas = document.getElementById('matrix-bg');
+        const matrixCtx = matrixCanvas.getContext('2d');
+        
+        const particlesCanvas = document.getElementById('particles-bg');
+        const particlesCtx = particlesCanvas.getContext('2d');
+        
+        const circuitCanvas = document.getElementById('circuit-bg');
+        const circuitCtx = circuitCanvas.getContext('2d');
+        
+        function initCanvas(canvas) {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        [matrixCanvas, particlesCanvas, circuitCanvas].forEach(initCanvas);
+        
+        const matrixChars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+        const fontSize = 14;
+        const columns = matrixCanvas.width / fontSize;
+        const matrixDrops = [];
+        
+        for (let i = 0; i < columns; i++) {
+            matrixDrops[i] = Math.random() * -100;
+        }
+        
+        function drawMatrix() {
+            matrixCtx.fillStyle = 'rgba(10, 10, 18, 0.05)';
+            matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+            
+            matrixCtx.fillStyle = '#00f0ff';
+            matrixCtx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < matrixDrops.length; i++) {
+                const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+                const x = i * fontSize;
+                const y = matrixDrops[i] * fontSize;
+                
+                matrixCtx.fillText(text, x, y);
+                
+                if (y > matrixCanvas.height && Math.random() > 0.975) {
+                    matrixDrops[i] = 0;
+                }
+                matrixDrops[i]++;
+            }
+        }
+        
+        const particles = [];
+        const particleCount = Math.floor(window.innerWidth / 5);
+        
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * particlesCanvas.width,
+                y: Math.random() * particlesCanvas.height,
+                size: Math.random() * 3 + 1,
+                speedX: Math.random() * 1 - 0.5,
+                speedY: Math.random() * 1 - 0.5
+            });
+        }
+        
+        function drawParticles() {
+            particlesCtx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+            
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                
+                particlesCtx.beginPath();
+                particlesCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                particlesCtx.fillStyle = 'rgba(0, 240, 255, 0.5)';
+                particlesCtx.fill();
+                
+                p.x += p.speedX;
+                p.y += p.speedY;
+                
+                if (p.x < 0 || p.x > particlesCanvas.width) p.speedX *= -1;
+                if (p.y < 0 || p.y > particlesCanvas.height) p.speedY *= -1;
+                
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        particlesCtx.beginPath();
+                        particlesCtx.strokeStyle = `rgba(0, 240, 255, ${1 - distance/100})`;
+                        particlesCtx.lineWidth = 0.5;
+                        particlesCtx.moveTo(p.x, p.y);
+                        particlesCtx.lineTo(p2.x, p2.y);
+                        particlesCtx.stroke();
+                    }
+                }
+            }
+        }
+        
+        // Circuit Animation
+        const circuitNodes = [];
+        const nodeCount = 15;
+        
+        for (let i = 0; i < nodeCount; i++) {
+            circuitNodes.push({
+                x: Math.random() * circuitCanvas.width,
+                y: Math.random() * circuitCanvas.height,
+                connections: []
+            });
+        }
+        
+        function drawCircuit() {
+            circuitCtx.clearRect(0, 0, circuitCanvas.width, circuitCanvas.height);
+            
+            circuitCtx.strokeStyle = 'rgba(110, 0, 255, 0.3)';
+            circuitCtx.lineWidth = 1;
+            
+            for (let i = 0; i < circuitNodes.length; i++) {
+                const node = circuitNodes[i];
+                
+                if (Math.random() > 0.95) {
+                    node.x += Math.random() * 4 - 2;
+                    node.y += Math.random() * 4 - 2;
+                }
+                
+                node.x = Math.max(0, Math.min(circuitCanvas.width, node.x));
+                node.y = Math.max(0, Math.min(circuitCanvas.height, node.y));
+                
+                circuitCtx.beginPath();
+                circuitCtx.arc(node.x, node.y, 2, 0, Math.PI * 2);
+                circuitCtx.fillStyle = 'rgba(110, 0, 255, 0.5)';
+                circuitCtx.fill();
+                
+                node.connections = [];
+                for (let j = 0; j < circuitNodes.length; j++) {
+                    if (i !== j) {
+                        const dx = node.x - circuitNodes[j].x;
+                        const dy = node.y - circuitNodes[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 200 && Math.random() > 0.7) {
+                            node.connections.push(j);
+                            
+                            circuitCtx.beginPath();
+                            circuitCtx.moveTo(node.x, node.y);
+                            circuitCtx.lineTo(circuitNodes[j].x, circuitNodes[j].y);
+                            circuitCtx.stroke();
+                            
+                            if (Math.random() > 0.95) {
+                                circuitCtx.beginPath();
+                                circuitCtx.arc(
+                                    (node.x + circuitNodes[j].x) / 2,
+                                    (node.y + circuitNodes[j].y) / 2,
+                                    1, 0, Math.PI * 2
+                                );
+                                circuitCtx.fillStyle = 'rgba(0, 240, 255, 0.8)';
+                                circuitCtx.fill();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        function animate() {
+            drawMatrix();
+            drawParticles();
+            drawCircuit();
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+        
+        window.addEventListener('resize', () => {
+            [matrixCanvas, particlesCanvas, circuitCanvas].forEach(initCanvas);
+        });
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Admin</title>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #particles-js { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            z-index: 1; 
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 0.375rem;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #4299e1;
+            color: #ffffff;
+            border: none;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            position: relative;
+        }
+        button:hover {
+            background-color: #3182ce;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #ffffff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        .status {
+            margin-top: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <div class="container" id="formContainer">
+        <h1>Create Admin</h1>
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" placeholder="Enter your username">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Email Pnerima Data">
+        </div>
+        <div class="form-group">
+            <label for="key">Key:</label>
+            <input type="text" id="key" placeholder="Enter your key">
+        </div>
+        <button id="createAdminBtn">
+            Create Admin
+            <div class="loading-spinner" id="loadingSpinner"></div>
+        </button>
+        <div class="status" id="statusMessage" style="display: none;"></div>
+    </div>
+
+    <script>
+        document.getElementById('createAdminBtn').addEventListener('click', async () => {
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const key = document.getElementById('key').value;
+        
+            if (!username || !email || !key) {
+                alert('Please fill all fields.');
+                return;
+            }
+        
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const statusMessage = document.getElementById('statusMessage');
+            loadingSpinner.style.display = 'block';
+        
+            try {
+                const response = await fetch('/create-adp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, key })
+                });
+        
+                const data = await response.json();
+        
+                if (data.message.includes('berhasil')) {
+                    statusMessage.textContent = '✅ Admin berhasil dibuat! Siahkan Cek Eail Anda';
+                    statusMessage.style.color = '#28a745';
+                } else {
+                    statusMessage.textContent = `❌ ${data.message}`;
+                    statusMessage.style.color = '#dc3545';
+                }
+            } catch (error) {
+                console.error(error);
+                statusMessage.textContent = '❌ An error occurred. Please try again.';
+                statusMessage.style.color = '#dc3545';
+            } finally {
+                loadingSpinner.style.display = 'none';
+                statusMessage.style.display = 'block';
+            }
+        });
+        
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 90, density: { enable: true, value_area: 800 } },
+                shape: { 
+                    type: "polygon", 
+                    stroke: { width: 2, color: "#00e4ff" }, 
+                    polygon: { nb_sides: 6 } 
+                },
+                opacity: { value: 0.6, random: true },
+                size: { value: 12, random: true },
+                move: { enable: true, speed: 2, direction: "top", out_mode: "out" },
+                line_linked: { enable: true, distance: 140, color: "#00e4ff", opacity: 0.5, width: 2 }
+            },
+            interactivity: {  
+                detect_on: "canvas",  
+                events: {  
+                    onhover: { enable: false },
+                    onclick: { enable: false },
+                    resize: true  
+                }  
+            }
+        });
+    </script>
+</body>
+</html>
