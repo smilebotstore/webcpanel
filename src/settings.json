@@ -1,13 +1,13 @@
 {
-  "name": "Skyzopedia Api",
+  "name": "Smile Bot Api",
   "version": "v3.0.0",
   "description": "Simple API with easy and minimalistic integration for WhatsApp Bot Developers.",
   "header": {
     "status": "Active!"
   },
   "apiSettings": {
-    "creator": "Skyzopedia", 
-    "apikey": ["aa"]
+    "creator": "smilestore", 
+    "apikey": ["smile"]
   },
   "links": [
     {
