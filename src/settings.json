@@ -1,0 +1,276 @@
+{
+  "name": "Skyzopedia Api",
+  "version": "v3.0.0",
+  "description": "Simple API with easy and minimalistic integration for WhatsApp Bot Developers.",
+  "header": {
+    "status": "Active!"
+  },
+  "apiSettings": {
+    "creator": "Skyzopedia", 
+    "apikey": ["aa"]
+  },
+  "links": [
+    {
+      "name": "Join Channel WhatsApp",
+      "url": "https://whatsapp.com/channel/0029VaYoztA47XeAhs447Y1s"
+    },
+    {
+      "name": "Contact Developer.",
+      "url": "https://whatsapp.com/channel/0029VaYoztA47XeAhs447Y1s"
+    }
+  ],
+  "categories": [
+    {
+      "name": "Openai",
+      "items": [
+        {
+          "name": "Deepseek",
+          "desc": "Deepseek ai",
+          "path": "/ai/deepseek?apikey=&text="
+        }, 
+        {
+          "name": "Openai",
+          "desc": "Openai chat",
+          "path": "/ai/openai?apikey=&text="
+        }        
+      ]
+    },
+    {
+      "name": "Orderkuota Gateway",
+      "items": [
+        {
+          "name": "Create Payment",
+          "desc": "Create qris payment", 
+          "path": "/orderkuota/createpayment?apikey=&amount=&codeqr=", 
+          "innerDesc": "Buy apikey ? wa.me/628386890336"
+        },
+        {
+          "name": "Cek Status",
+          "desc": "Cek status payment", 
+          "path": "/orderkuota/cekstatus?apikey=&merchant=&keyorkut=", 
+          "innerDesc": "Buy apikey ? wa.me/628386890336"          
+        }
+      ]
+    },    
+    {
+      "name": "Downloader",
+      "items": [
+        {
+          "name": "Tiktok",
+          "desc": "Downloader tiktok",
+          "path": "/download/tiktok?apikey=&url="
+        }, 
+        {
+          "name": "Tiktok V2",
+          "desc": "Downloader tiktok v2",
+          "path": "/download/tiktok-v2?apikey=&url="
+        }, 
+        {
+          "name": "Capcut",
+          "desc": "Downloader capcut",
+          "path": "/download/capcut?apikey=&url="
+        },        
+        {
+          "name": "Spotify",
+          "desc": "Downloader spotify",
+          "path": "/download/spotify?apikey=&url="
+        },        
+        {
+          "name": "XNXX",
+          "desc": "Downloader xnxx",
+          "path": "/download/xnxx?apikey=&url="
+        },   
+        {
+          "name": "Instagram",
+          "desc": "Downloader instagram",
+          "path": "/download/instagram?apikey=&url="
+        },                             
+        {
+          "name": "Facebook",
+          "desc": "Downloader facebook",
+          "path": "/download/facebook?apikey=&url="
+        }, 
+        {
+          "name": "Videy",
+          "desc": "Downloader videy",
+          "path": "/download/videy?apikey=&url="
+        },
+        {
+          "name": "Ytmp3",
+          "desc": "Downloader Youtube mp3",
+          "path": "/download/ytmp3?apikey=&url="
+        }, 
+        {
+          "name": "Snackvideo",
+          "desc": "Downloader snackvideo",
+          "path": "/download/snackvideo?apikey=&url="
+        }, 
+        {
+          "name": "Gitclone",
+          "desc": "Downloader gitclone",
+          "path": "/download/github?apikey=&url="
+        }, 
+        {
+          "name": "Mediafire",
+          "desc": "Downloader mediafire",
+          "path": "/download/mediafire?apikey=&url="
+        }                     
+      ]
+    },
+    {
+      "name": "Random",
+      "items": [
+        {
+          "name": "Blue Archive",
+          "desc": "Random foto blue archive",
+          "path": "/random/ba?apikey="
+        }, 
+        {
+          "name": "Random Waifu",
+          "desc": "Random foto waifu",
+          "path": "/random/waifu?apikey="
+        }, 
+        {
+          "name": "Random Nsfw",
+          "desc": "Random foto nsfw",
+          "path": "/random/nsfw?apikey="
+        }, 
+        {
+          "name": "Pap Ayang",
+          "desc": "Random pap ayang",
+          "path": "/random/papayang?apikey="
+        }                       
+      ]
+    },
+    {
+      "name": "Search",
+      "items": [
+        {
+          "name": "Youtube Search",
+          "desc": "Search youtube video",
+          "path": "/search/youtube?apikey=&q="
+        }, 
+        {
+          "name": "Tiktok Search",
+          "desc": "Search tiktok video",
+          "path": "/search/tiktok?apikey=&q="
+        }, 
+        {
+          "name": "Npm Search",
+          "desc": "Search npm nodejs",
+          "path": "/search/npm?apikey=&q="
+        }, 
+        {
+          "name": "Pinterest",
+          "desc": "Search pinterest foto",
+          "path": "/search/pinterest?apikey=&q="
+        }, 
+        {
+          "name": "Playstore",
+          "desc": "Search playstore apk",
+          "path": "/search/playstore?apikey=&q="
+        }, 
+        {
+          "name": "Happymod",
+          "desc": "Search happymod apk",
+          "path": "/search/happymod?apikey=&q="
+        }, 
+        {
+          "name": "XNXX Search",
+          "desc": "Search xnxx video",
+          "path": "/search/xnxx?apikey=&q="
+        }            
+      ]
+    },
+    {
+      "name": "Tools",
+      "items": [
+        {
+          "name": "Text-to-speech",
+          "desc": "Tts anime character",
+          "path": "/tools/text-to-speech?apikey=&text="
+        }, 
+        {
+          "name": "Screenshot Web",
+          "desc": "Screenshot web url",
+          "path": "/tools/ssweb?apikey=&url="
+        }, 
+        {
+          "name": "Emoji To Gif",
+          "desc": "Convert emoji to gif",
+          "path": "/tools/emojitogif?apikey=&emoji="
+        }, 
+        {
+          "name": "Emoji Mix",
+          "desc": "Emoji mix converter",
+          "path": "/tools/emojimix?apikey=&emoji1=&emoji2="
+        }                      
+      ]
+    },    
+    {
+      "name": "Stalker",
+      "items": [
+        {
+          "name": "Instagram Stalk",
+          "desc": "Stalk instagram account",
+          "path": "/stalk/instagram?apikey=&user="
+        },
+        {
+          "name": "Tiktok Stalk",
+          "desc": "Stalk tiktok account",
+          "path": "/stalk/tiktok?apikey=&user="
+        }, 
+        {
+          "name": "Npm Stalk",
+          "desc": "Stalk npm package",
+          "path": "/stalk/npm?apikey=&name="
+        }, 
+        {
+          "name": "FF Stalk",
+          "desc": "Stalk free fire account",
+          "path": "/stalk/ff?apikey=&id="
+        }        
+      ]
+    },        
+    {
+      "name": "Image Creator",
+      "items": [
+        {
+          "name": "Remini",
+          "desc": "Remini image",
+          "path": "/imagecreator/remini?apikey=&url="
+        }, 
+        {
+          "name": "Removebg",
+          "desc": "Remove background image",
+          "path": "/imagecreator/removebg?apikey=&url="
+        }, 
+        {
+          "name": "Upscale",
+          "desc": "Upscale image",
+          "path": "/imagecreator/upscale?apikey=&url="
+        }, 
+        {
+          "name": "Colorize",
+          "desc": "Colorize image",
+          "path": "/imagecreator/colorize?apikey=&url="
+        }, 
+        {
+          "name": "Brat",
+          "desc": "Brat text generator",
+          "path": "/imagecreator/brat?apikey=&text="
+        }                                 
+      ]
+    }, 
+    {
+      "name": "API",
+      "items": [
+        {
+          "name": "Status Api",
+          "desc": "",
+          "path": "/api/status"
+        }                        
+      ]
+    }               
+  ]
+}
